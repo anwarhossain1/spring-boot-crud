@@ -5,10 +5,7 @@ import com.example.spring_boot.service.PatientService;
 import com.example.spring_boot.service.PatientServiceImplements;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RequiredArgsConstructor
@@ -22,8 +19,12 @@ public class PatientController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getPatientById(@PathVariable String id) {
-        System.out.println(id);
         return ResponseEntity.ok(patientService.getPatientById(id));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePatientById(@PathVariable String id) {
+        patientService.getPatientById(id);
+        return ResponseEntity.ok("Deleted " + id + " Successfully");
     }
 
 }
