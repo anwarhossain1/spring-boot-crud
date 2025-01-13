@@ -18,7 +18,13 @@ public class PatientController {
     private final PatientService patientService;
     @GetMapping
     public ResponseEntity<List<PatientDTO>> getPatients() {
+
         return ResponseEntity.ok(patientService.getPatients());
+    }
+
+    @PostMapping
+    public ResponseEntity<Patient> addPatient(@RequestBody Patient patient) {
+        return ResponseEntity.ok(patientService.addPatient(patient));
     }
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getPatientById(@PathVariable String id) {
@@ -35,9 +41,5 @@ public class PatientController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Updated " + id + " Successfully");
         return ResponseEntity.ok(response);
-    }
-    @PostMapping
-    public ResponseEntity<Patient> addPatient(@RequestBody Patient patient) {
-        return ResponseEntity.ok(patientService.addPatient(patient));
     }
 }

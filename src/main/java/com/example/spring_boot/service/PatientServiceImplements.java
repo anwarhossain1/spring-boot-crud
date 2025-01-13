@@ -1,5 +1,6 @@
 package com.example.spring_boot.service;
 
+import com.example.spring_boot.CustomNotFoundException;
 import com.example.spring_boot.DTO.PatientDTO;
 import com.example.spring_boot.entity.Patient;
 import com.example.spring_boot.repository.PatientRepository;
@@ -20,17 +21,15 @@ public class PatientServiceImplements implements PatientService {
   private final ModelMapper modelMapper;
   @Override
   public List<PatientDTO> getPatients() {
-
     return patientRepository.findAll().stream().map(x -> modelMapper.map(x, PatientDTO.class)).collect(Collectors.toList());
   }
-
   @Override
   public Patient getPatientById(String id) {
     Optional<Patient> optionalPatient = patientRepository.findById(id);
-    if (!optionalPatient.isPresent()) {
-      throw new NoSuchElementException("Patient with ID " + id + " not found.");
+    if (optionalPatient.isPresent()) {
+      return modelMapper.map(optionalPatient.get(), Patient.class);
     }
-    return optionalPatient.orElse(null); // Return null if not found
+    throw new CustomNotFoundException("Patient with ID " + id + " not found.");
   }
 
   @Override
@@ -42,10 +41,11 @@ public class PatientServiceImplements implements PatientService {
   @Override
   public Patient updatePatient(String id, Patient patient) {
     Optional<Patient> optionalPatient = patientRepository.findById(id);
+    System.out.println("dd" + " " + optionalPatient);
     if (optionalPatient.isPresent()) {
       patientRepository.save(patient);
     }
-    return null;
+     throw new CustomNotFoundException("Patient with ID " + id + " not found.");
   }
 
   @Override
