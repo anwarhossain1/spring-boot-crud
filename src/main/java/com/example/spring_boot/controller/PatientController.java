@@ -1,5 +1,6 @@
 package com.example.spring_boot.controller;
 
+import com.example.spring_boot.DTO.PatientDTO;
 import com.example.spring_boot.entity.Patient;
 import com.example.spring_boot.service.PatientService;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +13,11 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/patients")
 public class PatientController {
     private final PatientService patientService;
     @GetMapping
-    public ResponseEntity<List<Patient>> getPatients() {
+    public ResponseEntity<List<PatientDTO>> getPatients() {
         return ResponseEntity.ok(patientService.getPatients());
     }
     @GetMapping("/{id}")
@@ -39,6 +40,4 @@ public class PatientController {
     public ResponseEntity<Patient> addPatient(@RequestBody Patient patient) {
         return ResponseEntity.ok(patientService.addPatient(patient));
     }
-
-
 }

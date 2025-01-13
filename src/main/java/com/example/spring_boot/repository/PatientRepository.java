@@ -10,5 +10,4 @@ import java.util.UUID;
 @Repository
 public interface PatientRepository extends MongoRepository<Patient, String> {
 
-    List<Patient> id(String id);
 }
