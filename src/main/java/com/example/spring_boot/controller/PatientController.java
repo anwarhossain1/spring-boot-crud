@@ -38,8 +38,8 @@ public class PatientController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updatePatientById(@PathVariable String id, @RequestBody Patient patient) {
         patientService.updatePatient(id, patient);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Updated " + id + " Successfully");
-        return ResponseEntity.ok(response);
+        Map<String, String> customResponse = new HashMap<>();
+        customResponse.put("message", "Updated " + id + " Successfully");
+        return ResponseEntity.ok(customResponse);
     }
 }
