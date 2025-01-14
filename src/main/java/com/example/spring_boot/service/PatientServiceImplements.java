@@ -3,10 +3,12 @@ package com.example.spring_boot.service;
 import com.example.spring_boot.CustomNotFoundException;
 import com.example.spring_boot.DTO.PatientDTO;
 import com.example.spring_boot.entity.Patient;
+import com.example.spring_boot.repository.PatientRepoReactive;
 import com.example.spring_boot.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,10 +20,11 @@ import java.util.stream.Collectors;
 @Service
 public class PatientServiceImplements implements PatientService {
   private final PatientRepository patientRepository;
+  private final PatientRepoReactive patientRepoReactive;
   private final ModelMapper modelMapper;
   @Override
-  public List<PatientDTO> getPatients() {
-    return patientRepository.findAll().stream().map(x -> modelMapper.map(x, PatientDTO.class)).collect(Collectors.toList());
+  public Flux<PatientDTO> getPatients() {
+    return patientRepoReactive.findAll().map(x -> modelMapper.map(x, PatientDTO.class));
   }
   @Override
   public Patient getPatientById(String id) {

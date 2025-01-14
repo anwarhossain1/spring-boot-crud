@@ -6,6 +6,7 @@ import com.example.spring_boot.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +18,7 @@ import java.util.Map;
 public class PatientController {
     private final PatientService patientService;
     @GetMapping
-    public ResponseEntity<List<PatientDTO>> getPatients() {
-
+    public ResponseEntity<Flux<PatientDTO>> getPatients() {
         return ResponseEntity.ok(patientService.getPatients());
     }
 
